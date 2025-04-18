@@ -1,0 +1,150 @@
+<html>
+<body>
+
+<form method="POST" enctype="multipart/form-data" action="/send">
+<h2>Bem vindo!</h2>
+<a href="https://www.iorad.com/player/1975858/Como-utilizar-o-CoachMatic-?#trysteps-1">Tutorial para o Coach Matic</a><br/><br/>
+
+<div style="background-color:#EEEEEE">
+Nome do projeto:<input name="project_name" id="project_name" type="text" size=80/><br/>
+<font color="gray">Nome para identificar o projeto. Não é a chave do projeto, é apenas uma descrição. Ex: Projeto A</font><br/><br/>
+</div>
+
+<table>
+<tr><td style="width:50%;">
+URL do jira:<input name="jira_url" id="jira_url" type="text" size=80 /><br/>
+<font color="gray">Se for o jira da Objective não precisa informar usuário/senha. Apenas confirme que o usuário svc_jira-sync-customers está com acesso ao projeto.</font><br/><br/>
+
+Usuário do jira:<input name="jira_user" id="jira_user" type="text" size=80 /><br/><br/>
+
+Senha/chave do usuário:<input name="jira_key" id="jira_key" type="password"  size=80 /><br/><br/>
+
+JQL:<input name="jql" id="jql" type="text"  size=160 /><br/>
+<font color="gray">Não esqueça de limitar o número de itens e cancelados.</font><br/>
+<font color="gray">Ex: project = XXX AND issuetype = XXX and status != Cancelado and (status != Done or resolved > -90d)</font><br/><br/>
+</td><td style=" border-left-style: dotted;width:50%;">
+Tem um zip com os issues?: <input type = "file" name = "filename" /><br/>
+<font color="gray">Se você gerou um zip com os issues não precisa informar URL, usuário, senha E jql.</font><br/><br/>
+&nbsp;&nbsp;&nbsp;Campos para exportar - separados por vírgula (opcional):<input name="export_csv_add_fields_zip" id="export_csv_add_fields_zip" type="text" size=80 /><br/>
+<font color="gray">Use o formato custom:label, outro_custom:outro_label.</font><br/>
+
+</td></tr>
+</table><br/><br/>
+
+<div style="background-color:#EEEEEE">
+Status:<input name="all_statuses" id="all_statuses" type="text"  size=160 /><br/>
+<font color="gray">Status separados por vírgula. Ex: Backlog, A fazer, Fazendo, Feito</font><br/>
+<font color="gray">Separe por / para agregar estados. Ex: Backlog, A fazer/To Do, Fazendo/Doing, Feito/Fechado</font><br/><br/>
+
+Início downstream:<input name="downstream_start" id="downstream_start" type="text"  size=80 /><br/>
+<font color="gray">Se deixar em branco será considerado o segundo status do seu workflow.</font><br/>
+
+Fim downstream:<input name="downstream_stop" id="downstream_stop" type="text"  size=80 /><br/>
+<font color="gray">Se deixar em branco será considerado o último status do seu workflow.</font><br/>
+</div><br/>
+E-mail para a resposta:<input name="receiver_email" id="receiver_email" type="text" size=80 />
+&nbsp;&nbsp;<label for="language">Língua:</label><select name="language" id="language">
+                      <option value="PT">Português</option>
+                      <option value="EN">English</option>
+                  </select><br/><br/>
+Agendar essa consulta para rodar semanalmente: <input type="checkbox" id="schedule" name="schedule" value="Yes">
+&nbsp;&nbsp;&nbsp;<label for="schedule_day">Janela de tempo:</label><select name="schedule_day" id="schedule_day">
+                      <option value="all_day.sh">Seg a Sex</option>
+                      <option value="mon.sh">Segunda</option>
+                      <option value="tue.sh">Terça</option>
+                      <option value="wed.sh">Quarta</option>
+                      <option value="thu.sh">Quinta</option>
+                      <option value="fri.sh">Sexta</option>
+                  </select><br/>
+<font color="gray">Agendar esta pesquisa para rodar toda semana.</font><br/>
+<font color="gray">Se agendamento for Seg-Sex você poderá consultar na página <a href="resultados.html">resultados</a>.</font><br/><br/>
+
+O que você quer fazer?<br>
+<input type="checkbox" id="repeat_for_each_field_value_chk" name="repeat_for_each_field_value_chk" value="Yes">
+  <label for="repeat_for_each_field_value">Repetir as análises abaixo para cada valor do campo informado.</label><br>
+&nbsp;&nbsp;&nbsp;Campo:<input name="repeat_for_each_field_value" id="repeat_for_each_field_value" type="text" size=80 /><br/>
+<font color="gray">Se o campo informado tem 10 valores, você terá 10 análises para cada valor do campo.</font><br/>
+<font color="gray">Ex: "Tipo de Item" para análise por cada tipo de item, ou "Projeto" para vários projetos simultaneamente.</font><br/>
+<font color="gray">Você também pode buscar atributo do pai de um item. Ex: pai.Assunto, ou pai.key para chave do pai.</font><br/><br/>
+
+<input type="checkbox" id="export_csv" name="export_csv" value="Yes">
+  <label for="export_csv">Gerar .csv para Actionable Agile.</label><br>
+&nbsp;&nbsp;&nbsp;Campos para exportar - separados por vírgula (opcional):<input name="export_csv_add_fields" id="export_csv_add_fields" type="text" size=80 /><br/>
+<font color="gray">Gere um arquivo para importar no Actionable Agile.</font><br/><br/>
+
+<input type="checkbox" id="total_age" name="total_age" value="Yes">
+  <label for="total_age">Total age.</label><br>
+&nbsp;&nbsp;&nbsp;<input type="checkbox" id="total_age_percentil" name="total_age_percentil" value="Yes"><label for="total_age_percentil">Incluir cálculo de percentil por estado.</label><br>
+<font color="gray">Útil quando há muito vai-e-volta no seu workflow.</font><br/><br/>
+
+<input type="checkbox" id="bag_of_words" name="bag_of_words" value="Yes">
+  <label for="bag_of_words">Bag of words.</label><br>
+&nbsp;&nbsp;&nbsp;<label for="bag_of_words_axis">Eixo:</label><select name="bag_of_words_axis" id="bag_of_words_axis"><option value="CycleTime">Cycle Time</option><option value="aggregatetimespent">Tempo Gasto Agregado</option><option value="timespent">Tempo Gasto</option></select><br/>
+&nbsp;&nbsp;&nbsp;Excluir palavras(opcional):<input name="bag_of_words_exclude" id="bag_of_words_exclude" type="text" size=120 /><br/>
+&nbsp;&nbsp;&nbsp;JQL para identificar filhos (opcional):<input name="subjql" id="subjql" type="text" size=80 />&nbsp;<font color="gray">Sugestão: parent in ({}).</font><br/>
+<font color="gray">Faça um levantamento das palavras mais associados aos maiores cycle times ou tempo gasto.</font><br/><br/>
+
+<input type="checkbox" id="blockers" name="blockers" value="Yes">
+  <label for="blockers">Bloqueios.</label><br>
+&nbsp;&nbsp;&nbsp;Dias para analisar:<input name="blocker_days" id="blocker_days" type="text" value="30" size=80 /><br/>
+&nbsp;&nbsp;&nbsp;Campo de bloqueio:<input name="blocker_field" id="blocker_field" type="text" value="Flagged" size=80 /><br/>
+&nbsp;&nbsp;&nbsp;Descrição do bloqueio:<input name="blocker_field_description" id="blocker_field_description" type="text"  size=80 /><br/>
+<font color="gray">Veja quais são seus últimos bloqueios.</font><br/><br/>
+
+<input type="checkbox" id="cfd" name="cfd" value="Yes">
+  <label for="cfd">CFD.</label><br>
+&nbsp;&nbsp;&nbsp;<input type="checkbox" id="wip_evolution_chart" name="wip_evolution_chart" value="Yes"><label for="wip_evolution_chart">Incluir gráfico da evolução do WIP.</label><br>
+<font color="gray">Veja como estão suas entregas através de uma análise do CFD.</font><br/><br/>
+
+<input type="checkbox" id="spc_throughput" name="spc_throughput" value="Yes"><label for="spc_throughput">Controle Estatístico de Processo - throughput.</label><br>
+<input type="checkbox" id="spc_creation" name="spc_creation" value="Yes"><label for="spc_creation">Controle Estatístico de Processo - criação.</label><br>
+&nbsp;&nbsp;&nbsp;<label for="spc_time_window">Janela de tempo:</label><select name="spc_time_window" id="spc_time_window"><option value="1">Diário</option><option value="7">Semanal</option></select><br/>
+<font color="gray">Veja se você está em controle estatístico de processos para vazão ou criação de itens.</font><br/><br/>
+
+<input type="checkbox" id="weekly_transition_heatmap" name="weekly_transition_heatmap" value="Yes"><label for="weekly_transition_heatmap">Heatmap para transições durante a semana.</label><br>
+<font color="gray">Tente compreender como é a dinâmica do seu time, movimentando os tickets de estados.</font><br/><br/>
+
+<input type="checkbox" id="aging_spc" name="aging_spc" value="Yes"><label for="aging_spc">Aging para downstream, mostrando SPC.</label><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="one_chart_aging_spc" name="one_chart_aging_spc" value="Yes"><label for="one_chart_aging_spc">Todos os estados em apenas um gráfico.</label><br>
+<font color="gray">Este é útil para acompanhamento diário.</font><br/><br/>
+
+<input type="checkbox" id="discriminated_throughput" name="discriminated_throughput" value="Yes">
+  <label for="discriminated_throughput">Gráfico de vazão discriminado por um campo específico.</label><br>
+&nbsp;&nbsp;&nbsp;<input type="checkbox" id="discriminated_throughput_creation" name="discriminated_throughput_creation" value="Yes"><label for="discriminated_throughput_creation">Incluir criação de itens.</label><br>
+&nbsp;&nbsp;&nbsp;Campo para discriminar:<input name="discriminated_throughput_field" id="discriminated_throughput_field" type="text" value="Tipo de item" size=80 /><br/>
+<font color="gray">Gráfico de vazão identificado cada valor informado no campo.</font><br/><br/>
+
+<input type="checkbox" id="tail_analysis" name="tail_analysis" value="Yes"><label for="tail_analysis">Análise de cauda.</label><br>
+&nbsp;&nbsp;&nbsp;<label for="tail_analysis_axis">Eixo:</label><select name="tail_analysis_axis" id="tail_analysis_axis"><option value="CycleTime">Cycle Time</option><option value="TotalAge">Total Age</option></select><br/>
+&nbsp;&nbsp;&nbsp;Excluir status se for eixo TotalAge(opcional):<input name="tail_analysis_exclude" id="tail_analysis_exclude" type="text" size=120 /><br/>
+<font color="gray">Verifique se seu processo tem cauda longa ou não, respectivos outliers.</font><br/>
+<font color="gray">Utilize "eixo Total Age" se quiser desconsiderar um status do seu downstream.</font><br/><br/>
+
+<input type="checkbox" id="effort" name="effort" value="Yes">
+  <label for="effort">Análise de horas registradas.</label><br>
+&nbsp;&nbsp;&nbsp;<label for="effort_axis">Eixo:</label><select name="effort_axis" id="effort_axis"><option value="aggregatetimespent">Tempo Gasto Agregado</option><option value="timespent">Tempo Gasto</option></select><br/>
+&nbsp;&nbsp;&nbsp;<input type="checkbox" id="effort_per_state" name="effort_per_state" value="Yes"><label for="effort_per_state">Soma de esforço por estado.</label><br>
+&nbsp;&nbsp;&nbsp;<input type="checkbox" id="effort_per_issuetype" name="effort_per_issuetype" value="Yes"><label for="effort_per_issuetype">Soma de esforço por tipo de issue.</label><br>
+&nbsp;&nbsp;&nbsp;<input type="checkbox" id="effort_who" name="effort_who" value="Yes"><label for="effort_who">Nome de quem registrou horas.</label><br>
+&nbsp;&nbsp;&nbsp;<input type="checkbox" id="effort_throughput" name="effort_throughput" value="Yes"><label for="effort_throughput">Compare aumento e throughput para entender melhor sua capacidade.</label><br>
+<font color="gray">Faça um levantamento da tendência de horas registradas. Útil também para itens cancelados.</font><br/>
+<font color="gray">Ex jql para cancelados: project = XXX and issuetype = XXX and status = cancelado and status changed to cancelado after -90d.</font><br/><br/>
+
+<input type="checkbox" id="pct_ca" name="pct_ca" value="Yes">
+  <label for="pct_ca">% C/A - Percentual Complete and Accurate.</label><br>
+&nbsp;&nbsp;&nbsp;Usuários de QA do jira separados por vírgula:<input name="user_pct_ca" id="jql" type="text"  size=160 /><br/>
+&nbsp;&nbsp;&nbsp;JQL para contar bugs<input name="count_bugs_jql" id="count_bugs_jql" type="text"  size=160 value="issuetype = 'Bug de Alfa' and parent = ?"/><br/>
+<font color="gray">Informe usuários do Jira de quem faz QA, para identificar retrabalhos após QA.</font><br/>
+<font color="gray">Utilize esta métrica sobre issues onde as pessoas registram horas trabalhadas.</font><br/><br/>
+
+<input type="checkbox" id="recluster" name="recluster" value="Yes">
+  <label for="recluster">Recalcule cluster.</label><br>
+<font color="gray">São várias formas de recalcular o cluster.</font><br/>
+<font color="gray">Selecione 'Gerar .csv para Actionable Agile', 'Total age' e 'Análise de horas registradas' por horas agregadas.</font><br/>
+<font color="gray">exemplo de jql para subtarefas: issueFunction in subtasksOf('issueFunction in linkedIssuesOf("issuetype = Demanda and (status not in (Cancelado, Fechado) or resolved > -30d) and \"Taskboard Project Id\" in (73867, 73884, 73885)", "demandou") and project in (VIP, VERO)')</font><br/>
+<font color="gray">exemplo de jql para OS: issueFunction in linkedIssuesOf("issuetype = Demanda and (status not in (Cancelado, Fechado) or resolved > -30d) and \"Taskboard Project Id\" in (73867, 73884, 73885)", "demandou") and project in (VIP, VERO)</font><br/>
+
+<input type="submit" value="Submit" />
+
+</body>
+</html>
